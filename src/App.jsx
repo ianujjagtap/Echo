@@ -1,56 +1,64 @@
-import React, { useState } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import React, { useState ,useEffect , useRef } from 'react';
+import Prompt from './components/promptbox';
+import echo_logo from "./images/echo-logo.png";
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
+import Navbar from './components/navbar';
 
 
-const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI'); // declaring new gen ai and providing api key to it
+
+
+
+
 
 function App() {
-  const [prompt, setPrompt] = useState('');  //useState variable for prompt 
-  const [generatedText, setGeneratedText] = useState('');   //usestate variable for ganerate text
+  const scrollRef = useRef(null);
 
-  // Function to handle generation of text based on user prompt
+  useEffect(() => {
+    const scroll = new LocomotiveScroll({
+      el: scrollRef.current,
+      smooth: true
+    });
 
-  const handleGenerate = async () => {
-    // Getting a generative model from the Google Generative AI API
+    return () => {
+      if (scroll) scroll.destroy();
+    };
+  }, []);
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });   // Defining the model for Google Generative AI
 
-    try {
-      // Generating content based on the user-provided prompt
-
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = await response.text();
-
-      const splitedText = text.split("*");
-      const joinedText = vv.join(" ")
-      setGeneratedText(joinedText);
-      // Updating state with the generated text
-
-      // setGeneratedText(text);  // Setting the generated text to display in the UI
-    } catch (error) {
-      // Handling errors that occur during content generation
-
-      console.error('Error generating content:', error);  // Logging an error message if content generation fails
-    }
-  };
-
+  const [generatedText, setGeneratedText] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [showLogo, setShowLogo] = useState(true);
   
+
+
+
+
+
+
   return (
     <div>
-      <h1>Generative AI Demo</h1>
-      <textarea
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Enter your prompt here..."
-        rows={4}
-        cols={50}
-      />
-      <br />
-      <button onClick={handleGenerate}>Generate</button>
-      <br />
-      <h2>Generated Story:</h2>
-      <p>{generatedText}</p>
+     <Navbar/>
+
+      <div data-scroll-container ref={scrollRef} className="scroll-container genaration pt-16  overflow-y-scroll textarea-hide-scrollbar ml-96 w-[850px] scroll-smooth  max-md:ml-4 max-md:w-[400px]">
+        {showLogo && (
+          <div className=" logo-container absolute top-[18%] left-[32%] h-40 max-md:left-[25%] ">
+            <img className="w-48 pt-40 text-slate-500" src={echo_logo} alt="Logo" />
+          </div>
+        )}
+
+        {!showLogo && (
+          <div data-scroll-section className="scroll-section conversation-container flex flex-col p-4">
+            <div className="prompt-text text-center bg-slate-600 rounded-lg p-4  w-[50%] ml-96 max-md:ml-44">
+              {prompt}
+            </div>
+            <div className="generated-text  bg-slate-800 p-8 rounded-lg mt-3 w-[40vw] mb-20  overflow-y-scroll textarea-hide-scrollbar max-md:w-[80vw] max-md:text-sm max-md:p-4">
+              {generatedText}
+            </div>
+          </div>
+        )}
+      </div>
+      <Prompt generatedText={generatedText} setGeneratedText={setGeneratedText} prompt={prompt} setPrompt={setPrompt} setShowLogo={setShowLogo} />
     </div>
   );
 }

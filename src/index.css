@@ -7,3 +7,17 @@
     color: #fff;
     font-family: Gilroy;
 }
+
+
+.textarea-hide-scrollbar {
+    overflow: auto;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+  
+  .textarea-hide-scrollbar::-webkit-scrollbar {
+    display: none;  
+  }
+
+  
+  
