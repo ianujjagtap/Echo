@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaTwitter, FaLinkedin, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import ProductCard from "./productCard";
 import DeveloperCard from "./developer";
 
@@ -24,15 +23,15 @@ const navbar = () => {
             return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
         }
     }, [showDeveloperCard]);
-    // useEffect(() => {
-    //     if (showProductCard) {
-    //         const timer = setTimeout(() => {
-    //             setShowProductCard(false);
-    //         }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
+    useEffect(() => {
+        if (showProductCard) {
+            const timer = setTimeout(() => {
+                setShowProductCard(false);
+            }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
 
-    //         return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
-    //     }
-    // }, [showProductCard]);
+            return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
+        }
+    }, [showProductCard]);
 
 
 
@@ -51,7 +50,7 @@ const navbar = () => {
                 </div>
 
                 {showDeveloperCard && (
-                   <DeveloperCard setShowDeveloperCard={setShowDeveloperCard} showDeveloperCard={showDeveloperCard}/>
+                    <DeveloperCard setShowDeveloperCard={setShowDeveloperCard} showDeveloperCard={showDeveloperCard} />
                 )}
                 {showProductCard && (
                     <ProductCard setShowProductCard={setShowProductCard} showProductCard={showProductCard} />
