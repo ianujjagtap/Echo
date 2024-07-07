@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
+
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = ({setGeneratedText,setShowLogo,prompt,setPrompt,setLockedPrompt }) => {
@@ -10,6 +11,7 @@ const Prompt = ({setGeneratedText,setShowLogo,prompt,setPrompt,setLockedPrompt }
 
         setShowLogo(false);
         setLockedPrompt(prompt);
+        setPrompt('')
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" ,tools: [
             {
               codeExecution: {},
