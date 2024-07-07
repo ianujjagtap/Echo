@@ -4,22 +4,25 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
-const Prompt = ({ generatedText, setGeneratedText, prompt, setPrompt, setShowLogo }) => {
-
+const Prompt = ({setGeneratedText,setShowLogo,prompt,setPrompt,setLockedPrompt }) => {
+    
     const handleGenerate = async () => {
 
-        setShowLogo(false)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        setShowLogo(false);
+        setLockedPrompt(prompt);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" ,tools: [
+            {
+              codeExecution: {},
+            },
+          ], });
 
         try {
-
-
             const result = await model.generateContent(prompt);
             const response = await result.response;
+            console.log(response)
             const text = await response.text();
-
-            const splitedText = text.split("*");
-            const joinedText = splitedText.join(" ")
+            const splitedText = text.split("* .");
+            const joinedText = splitedText.join("\n")
             setGeneratedText(joinedText);
 
         } catch (error) {
