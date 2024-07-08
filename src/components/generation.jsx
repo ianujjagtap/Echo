@@ -4,9 +4,14 @@ import hljs from 'highlight.js';
 import echo_logo from "../images/echo-logo.png";
 import LocomotiveScroll from 'locomotive-scroll';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
-const Generation = ({ generatedText, showLogo, prompt }) => {
+
+const Generation = () => {
     const scrollRef = useRef(null);
+    const generatedText = useSelector((state)=>state.chat.generatedText);
+    const showLogo = useSelector((state)=>state.chat.showLogo);
+    const prompt = useSelector((state)=>state.chat.lockedPrompt);
 
     useEffect(() => {
         const scroll = new LocomotiveScroll({

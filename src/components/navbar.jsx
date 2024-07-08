@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from "./productCard";
 import DeveloperCard from "./developer";
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
+
 
 
 const navbar = () => {

@@ -4,6 +4,7 @@ import 'locomotive-scroll/dist/locomotive-scroll.css';
 import Navbar from './components/navbar';
 import GenerateSection from "./components/generation";
 
+
 function App() {
   const [generatedText, setGeneratedText] = useState('');
   const [showLogo, setShowLogo] = useState(true);
