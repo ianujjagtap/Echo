@@ -2,33 +2,32 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from "./productCard";
 import DeveloperCard from "./developer";
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
-
-
 
 const navbar = () => {
-    const [showDeveloperCard, setShowDeveloperCard] = useState(false);
-    const [showProductCard, setShowProductCard] = useState(false);
+   /* We Have Not Stored This State Variables In Store Becuase They Are being Used In Only This 
+    Componet*/
+
     const [ActiveCard, setActiveCard] = useState(null);
 
     useEffect(() => {
-        if (showDeveloperCard) {
+        if (ActiveCard == "DeveloperCard" ) {
             const timer = setTimeout(() => {
-                setShowDeveloperCard(false);
+                setActiveCard(null);
             }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
 
             return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
         }
-    }, [showDeveloperCard]);
+    }, [ActiveCard]);
+
     useEffect(() => {
-        if (showProductCard) {
+        if (ActiveCard == "ProductCard" ) {
             const timer = setTimeout(() => {
-                setShowProductCard(false);
+                setActiveCard(null);
             }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
 
             return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
         }
-    }, [showProductCard]);
+    }, [ActiveCard]);
 
 
 
@@ -50,10 +49,11 @@ const navbar = () => {
                 </div>
 
                 {ActiveCard == "DeveloperCard" && (
-                    <DeveloperCard setShowDeveloperCard={setShowDeveloperCard} showDeveloperCard={showDeveloperCard} setActiveCard={setActiveCard} />
+                    <DeveloperCard setActiveCard={setActiveCard} />
                 )}
+
                 {ActiveCard == "ProductCard" && (
-                    <ProductCard setShowProductCard={setShowProductCard} showProductCard={showProductCard} setActiveCard={setActiveCard} />
+                    <ProductCard setActiveCard={setActiveCard} />
                 )}
             </motion.nav>
         </>

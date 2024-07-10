@@ -1,11 +1,17 @@
 import React from 'react';
 import Photo from "../images/myphoto.jpg";
 import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+
 
 const developer = ({setActiveCard }) => {
     return (
         <>
-            <div className="developer-card p-6  absolute right-20  rounded-lg shadow-lg w-80 mt-8 max-md:right-8">
+            <motion.div 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 1 }}
+            className="developer-card p-6  absolute right-20  rounded-lg shadow-lg w-80 mt-8 max-md:right-8">
                 <div className="flex flex-col items-center">
                     <i onClick={() => setActiveCard(null)} className="ri-close-large-line absolute text-text-slate-400 hover:text-teal-300 right-8"></i>
                     <img src={Photo} alt="Developer" className="w-32 h-32 rounded-full object-cover mb-4" />
@@ -17,7 +23,7 @@ const developer = ({setActiveCard }) => {
                         <a href="https://github.com/Anuj2004-Jagtap" target="_blank" rel="noopener noreferrer" className="text-gray-800 hover:text-gray-600"><FaGithub size={24} /></a>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     )
 }

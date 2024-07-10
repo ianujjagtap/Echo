@@ -10,22 +10,24 @@ const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = () => {
     const dispatch = useDispatch();
-    const prompt = useSelector((state)=>state.chat.prompt);
-    const generatedText = useSelector((state)=>state.chat.generatedText);
-    const showLogo = useSelector((state) =>state.chat.showLogo);
-    const lockedPrompt = useSelector((state) =>state.chat.lockedPrompt);
+    const prompt = useSelector((state) => state.chat.prompt);
+    const generatedText = useSelector((state) => state.chat.generatedText);
+    const showLogo = useSelector((state) => state.chat.showLogo);
+    const lockedPrompt = useSelector((state) => state.chat.lockedPrompt);
 
-    
+
     const handleGenerate = async () => {
 
         dispatch(setShowLogo(false));
         dispatch(setLockedPrompt(prompt));
         dispatch(setPrompt(''));
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" ,tools: [
-            {
-              codeExecution: {},
-            },
-          ], });
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash", tools: [
+                {
+                    codeExecution: {},
+                },
+            ],
+        });
 
         try {
             const result = await model.generateContent(prompt);
@@ -50,7 +52,7 @@ const Prompt = () => {
                         value={prompt}
                         onChange={(e) => dispatch(setPrompt(e.target.value))}
                         placeholder="Enter your prompt here..."
-                        className="w-[830px] h-14 relative rounded-full p-2 pl-6 pr-28 pt-4 text-wrap border-2 border-solid border-slate-500 textarea-hide-scrollbar flex items-center max-md:w-[370px]"
+                        className="w-[830px] focus:outline-none h-14 relative rounded-full p-2 pl-6 pr-28 pt-4 text-wrap border-2 border-solid border-slate-500 textarea-hide-scrollbar flex items-center max-md:w-[370px]"
                         style={{ resize: 'none' }}
                     />
                     <button

@@ -1,11 +1,17 @@
 import React from 'react';
 import Project1 from "../images/copy-document.png";
+import { motion } from 'framer-motion';
 
 
-const developerCard = ({setActiveCard}) => {
+
+const productCard = ({setActiveCard}) => {
     return (
         <>
-            <div className="developer-card p-6  absolute right-20 bg-slate-800 rounded-lg shadow-lg w-80 mt-8 max-md:right-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            className="developer-card p-6  absolute right-20 bg-slate-800 rounded-lg shadow-lg w-80 mt-8 max-md:right-8">
                 <div className="flex flex-col items-center">
                     <i onClick={() => setActiveCard(null)} className="ri-close-large-line top-0 bg-slate-800 absolute text-text-slate-400 hover:text-teal-300 right-6"></i>
 
@@ -19,9 +25,9 @@ const developerCard = ({setActiveCard}) => {
                     </div>
                    
                 </div>
-            </div>
+            </motion.div>
         </>
     )
 }
 
-export default developerCard
+export default productCard
