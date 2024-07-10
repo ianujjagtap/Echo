@@ -9,7 +9,6 @@ import { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt } from '../fe
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = () => {
-
     const dispatch = useDispatch();
     const prompt = useSelector((state) => state.chat.prompt);
 
@@ -42,7 +41,7 @@ const Prompt = () => {
     
     return (
         <>
-            <div className="prompt fixed bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0  ">
+            <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0  ">
                 <div className='relative flex justify-center items-center flex-col'>
 
                     <textarea
