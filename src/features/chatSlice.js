@@ -38,3 +38,7 @@ const chatSlice = createSlice({
 
 export const { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt, setToggleSidebar,toggleSidebar } = chatSlice.actions;
 export default chatSlice.reducer;
+
+
+
+
