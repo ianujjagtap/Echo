@@ -9,18 +9,16 @@ import { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt } from '../fe
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = () => {
+
     const dispatch = useDispatch();
     const prompt = useSelector((state) => state.chat.prompt);
-    const generatedText = useSelector((state) => state.chat.generatedText);
-    const showLogo = useSelector((state) => state.chat.showLogo);
-    const lockedPrompt = useSelector((state) => state.chat.lockedPrompt);
-
 
     const handleGenerate = async () => {
 
         dispatch(setShowLogo(false));
         dispatch(setLockedPrompt(prompt));
         dispatch(setPrompt(''));
+
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash", tools: [
                 {
@@ -38,11 +36,10 @@ const Prompt = () => {
             dispatch(setGeneratedText(joinedText));
 
         } catch (error) {
-
-
             console.error('Error generating content:', error);
         }
     };
+    
     return (
         <>
             <div className="prompt fixed bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0  ">

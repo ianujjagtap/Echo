@@ -4,13 +4,13 @@ import DeveloperCard from "./developer";
 import { motion } from 'framer-motion';
 
 const navbar = () => {
-   /* We Have Not Stored This State Variables In Store Becuase They Are being Used In Only This 
-    Componet*/
+    /* We Have Not Stored This State Variables In Store Becuase They Are being Used In Only This 
+     Componet*/
 
     const [ActiveCard, setActiveCard] = useState(null);
 
     useEffect(() => {
-        if (ActiveCard == "DeveloperCard" ) {
+        if (ActiveCard == "DeveloperCard" || ActiveCard == "ProductCard") {
             const timer = setTimeout(() => {
                 setActiveCard(null);
             }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
@@ -19,15 +19,6 @@ const navbar = () => {
         }
     }, [ActiveCard]);
 
-    useEffect(() => {
-        if (ActiveCard == "ProductCard" ) {
-            const timer = setTimeout(() => {
-                setActiveCard(null);
-            }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
-
-            return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
-        }
-    }, [ActiveCard]);
 
 
 
@@ -43,8 +34,8 @@ const navbar = () => {
                         <span className="text-white text-xl font-semibold max-md:text-2xl hover:text-teal-300 hover:scale-150 trasition duration-500 ease-in-out select-none">Echo</span>
                     </div>
                     <div className="flex space-x-4 max-md:text-sm">
-                        <a href="#" onClick={() => setActiveCard('ProductCard')} className="text-white hover:text-teal-300 max-md:hidden">Other Product</a>
-                        <a href="#" onClick={() => setActiveCard('DeveloperCard')} className="  text-white hover:text-teal-300 max-md:pt-2 ">About Developer</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('ProductCard') }} className="text-white hover:text-teal-300 max-md:hidden">Other Product</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('DeveloperCard') }} className="  text-white hover:text-teal-300 max-md:pt-2 ">About Developer</a>
                     </div>
                 </div>
 
