@@ -41,14 +41,14 @@ const Prompt = () => {
     
     return (
         <>
-            <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0">
+            <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0 ">
                 <div className='relative flex justify-center items-center flex-col'>
 
                     <textarea
                         value={prompt}
                         onChange={(e) => dispatch(setPrompt(e.target.value))}
                         placeholder="Enter your prompt here..."
-                        className="w-[830px] focus:outline-none h-14 relative rounded-full p-2 pl-6 pr-28 pt-4 text-wrap border-2 border-solid border-slate-500 textarea-hide-scrollbar flex items-center max-md:w-[370px]"
+                        className="w-[830px] bg-[#111] focus:outline-none h-14 relative rounded-full p-2 pl-6 pr-28 pt-4 text-wrap border-2 border-solid border-slate-500 textarea-hide-scrollbar flex items-center max-md:w-[370px]"
                         style={{ resize: 'none' }}
                     />
                     <button

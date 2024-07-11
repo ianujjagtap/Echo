@@ -7,7 +7,9 @@ import SideBar from './components/sidebar';
 
 
 
+
 function App() {
+
   return (
     <>
       <Navbar />
