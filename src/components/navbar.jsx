@@ -56,7 +56,7 @@ const navbar = () => {
                         <span className="text-white text-2xl font-semibold max-md:text-2xl max-md:ml-12 hover:text-teal-300 hover:scale-150 trasition duration-500 ease-in-out select-none">Echo</span>
                     </div>
                     <div className="flex space-x-4 max-md:text-sm">
-                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('ProductCard') }} className="text-white hover:text-teal-300 max-md:hidden">Other Product</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('ProductCard') }} className="text-white hover:text-teal-300 max-md:hidden">Other Products</a>
                         <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('DeveloperCard') }} className="  text-white hover:text-teal-300 max-md:pt-2 ">About Developer</a>
                     </div>
                 </div>
