@@ -15,6 +15,7 @@ const Prompt = () => {
     const handleGenerate = async () => {
 
         dispatch(setShowLogo(false));
+        dispatch(setGeneratedText(''))
         dispatch(setLockedPrompt(prompt));
         dispatch(setPrompt(''));
 

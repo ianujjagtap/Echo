@@ -8,6 +8,16 @@
     font-family: Gilroy,poppins-regular;    
 }
 
+.generated-text {
+  opacity: 1;
+  transform: translateY(10px);
+  transition: opacity 4s ease-out, transform 1s ease-out;
+}
+
+.generated-text.visible {
+  opacity: 0;
+  transform: translateY(0);
+}
 
 .textarea-hide-scrollbar {
     overflow: auto;
