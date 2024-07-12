@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import MistralClient from '@mistralai/mistralai';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt } from '../features/chatSlice';
 
 
 
 
-const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
+const client = new MistralClient('jHGQfCsIRuJJKVctcmDI92NZrxUQY1v5');
 
 const Prompt = () => {
     const dispatch = useDispatch();
@@ -18,27 +18,30 @@ const Prompt = () => {
         dispatch(setLockedPrompt(prompt));
         dispatch(setPrompt(''));
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash", tools: [
-                {
-                    codeExecution: {},
-                },
-            ],
-        });
+        // const model = genAI.getGenerativeModel({
+        //     model: "gemini-1.5-flash", tools: [
+        //         {
+        //             codeExecution: {},
+        //         },
+        //     ],
+        // });
 
         try {
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = await response.text();
-            const splitedText = text.split("* .");
-            const joinedText = splitedText.join("\n")
-            dispatch(setGeneratedText(joinedText));
+            const chatResponse = await client.chat({
+                model: 'mistral-large-latest',
+                messages: [{ role: 'user', content: prompt }],
+            });
 
+            const text = chatResponse.choices[0].message.content;
+            const splitedText = text.split("* .");
+            const joinedText = splitedText.join("\n");
+            dispatch(setGeneratedText(joinedText));
+            console.log(joinedText)
         } catch (error) {
             console.error('Error generating content:', error);
         }
     };
-    
+
     return (
         <>
             <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0 ">
