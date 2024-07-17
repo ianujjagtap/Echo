@@ -44,7 +44,7 @@ const Generation = () => {
                     <motion.div initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
-                        className="logo-container absolute top-[18%] left-[42%] h-40 max-md:left-[25%] ">
+                        className="logo-container absolute top-[18%] left-[33%] h-40 max-md:left-[25%] ">
                         <img className="w-48 pt-40 text-slate-500" src={echo_logo} alt="Logo" />
                     </motion.div>
                 )}
