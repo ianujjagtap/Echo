@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark.css'; // Import the Highlight.js theme
+import 'highlight.js/styles/github-dark.css'; 
 import echo_logo from "../images/echo-logo.png";
-import LocomotiveScroll from 'locomotive-scroll';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack'
+import Stack from '@mui/material/Stack';
+import axios from 'axios';
+
 
 
 const Generation = () => {
@@ -16,16 +17,6 @@ const Generation = () => {
     const showLogo = useSelector((state) => state.chat.showLogo);
     const prompt = useSelector((state) => state.chat.lockedPrompt);
 
-    useEffect(() => {
-        const scroll = new LocomotiveScroll({
-            el: scrollRef.current,
-            smooth: true
-        });
-
-        return () => {
-            if (scroll) scroll.destroy();
-        };
-    }, []);
 
     useEffect(() => {
         marked.setOptions({
@@ -35,22 +26,47 @@ const Generation = () => {
         });
     }, []);
 
+    useEffect(() => {
+        if (generatedText) {
+            sendConversationToBackend(prompt, generatedText);
+        }
+    }, [generatedText]);
+
+    const sendConversationToBackend = async (prompt, generatedText) => {
+        try {
+            const response = await axios.post('http://localhost:3000/conversation/add', {
+                prompt,
+                response: generatedText,
+            },{
+                headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}
+            });
+
+            if (response.status === 200) {
+                console.log('Conversation saved successfully');
+            } else {
+                console.error('Failed to save conversation');
+            }
+        } catch (error) {
+            console.error('Error saving conversation:', error);
+        }
+    };
+
     const formattedGeneratedText = marked(generatedText);
 
     return (
         <>
-            <div data-scroll-container ref={scrollRef} className="scroll-container generation pt-16  overflow-y-scroll textarea-hide-scrollbar ml-96 w-[850px] scroll-smooth max-md:ml-4 max-md:w-[400px]">
+            <div data-scroll-container ref={scrollRef} className="scroll-container generation pt-16   overflow-y-scroll textarea-hide-scrollbar ml-96 w-[850px] scroll-smooth max-md:ml-4 max-md:w-[400px]">
                 {showLogo && (
                     <motion.div initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
-                        className="logo-container absolute top-[18%] left-[33%] h-40 max-md:left-[25%] ">
+                        className="logo-container absolute top-[18%] left-[43%] h-40 max-md:left-[25%] ">
                         <img className="w-48 pt-40 text-slate-500" src={echo_logo} alt="Logo" />
                     </motion.div>
                 )}
 
                 {!showLogo && (
-                    <div data-scroll-section className="scroll-section flex flex-col p-4">
+                    <div data-scroll-section className="scroll-section flex  flex-col p-4">
                         <div className="prompt-text text-center bg-slate-600 rounded-lg p-4 w-[50%] ml-96 max-md:ml-44">
                             {prompt}
                         </div>

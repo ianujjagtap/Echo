@@ -9,8 +9,8 @@ const echo = () => {
     return (
         <>
             <Navbar />
-            <SideBar />
             <GenerateSection />
+            <SideBar />
             <Prompt />
         </>
     )
