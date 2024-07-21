@@ -34,7 +34,7 @@ const Generation = () => {
 
     const sendConversationToBackend = async (prompt, generatedText) => {
         try {
-            const response = await axios.post('https://echo-backend-uttw.onrender.com/add', {
+            const response = await axios.post('https://echo-backend-uttw.onrender.com/conversation/add', {
                 prompt,
                 response: generatedText,
             },{
