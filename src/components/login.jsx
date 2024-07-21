@@ -24,9 +24,9 @@ const Login = ({ setIsAuthenticated }) => {
 
     return (
         <form onSubmit={handleLogin}>
-            <div className="flex justify-center items-center h-screen bg-[#111]">
-                <div className="login w-96 h-96 flex flex-col justify-between items-center bg-slate-800 p-4 rounded-xl shadow-md">
-                    <span className="text-teal-300 text-3xl pt-6 bg-transparent  font-semibold max-md:text-2xl max-md:ml-12  hover:scale-150 transition duration-500 ease-in-out select-none">Echo</span>
+            <div className="flex justify-center items-center h-screen bg-[#111] max-md:h-[100vw] max-md:mt-40">
+                <div className="login w-96 h-96 flex flex-col justify-between items-center bg-slate-800 p-4 rounded-xl shadow-md max-md:w-80">
+                    <span className="text-teal-300 text-3xl pt-6 bg-transparent  font-semibold max-md:text-2xl   hover:scale-150 transition duration-500 ease-in-out select-none">Echo</span>
 
                     <div className="inputs mt-4 space-y-4 bg-transparent">
                         <input
@@ -48,7 +48,7 @@ const Login = ({ setIsAuthenticated }) => {
                     </div>
                     <button
                         type="submit"
-                        className="w-80 h-10 flex justify-evenly items-center bg-blue-700 border-2 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
+                        className="w-80 h-10 flex justify-evenly items-center bg-blue-700 border-2 max-md:w-52 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
                     >Log In</button>
                     <span className='text-xs text-red-600 bg-transparent'>{message}</span>
                     <span className='text-sm bg-transparent'>Don't Have An Account <Link to="/signup" className="text-teal-300 bg-transparent">Sign Up</Link></span>

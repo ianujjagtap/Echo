@@ -37,7 +37,6 @@ const Prompt = () => {
             const splitedText = text.split("* .");
             const joinedText = splitedText.join("\n");
             dispatch(setGeneratedText(joinedText));
-            console.log(joinedText)
         } catch (error) {
             console.error('Error generating content:', error);
         }

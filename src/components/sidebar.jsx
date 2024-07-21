@@ -1,15 +1,40 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { MdOutlineFeedback } from "react-icons/md";
 import { setShowLogo } from '../features/chatSlice';
+import axios from 'axios';
 
 
 
 const sidebar = () => {
+    const [conversations, setConversations] = useState([]);
+    const [prompts, setPrompts] = useState([]);
     const dispatch = useDispatch();
     const isSidebarVisible = useSelector((state) => state.chat.isSidebarVisible);
+
+    useEffect(() => {
+        const fetchConversations = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/conversations', {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                });
+                
+                const data = response.data;
+                setConversations(data);
+
+                // Extract prompts from conversations
+                const extractedPrompts = data.map(conversation => conversation.prompt);
+                setPrompts(extractedPrompts);
+            } catch (error) {
+                console.error('Error fetching conversations:', error);
+                setError(error.message);
+            }
+        };
+
+        fetchConversations();
+    }, []);
+
     return (
         <>
             <AnimatePresence>
@@ -23,7 +48,15 @@ const sidebar = () => {
                         <div className="button flex justify-end max-md:pl-44 bg-transparent">
                             <FaRegPenToSquare className='text-xl bg-transparent' onClick={() => dispatch(setShowLogo(true))} />
                         </div>
-                        <div className="conversations h-[65vh] mt-4 max-md:h-[70vh]">Conversatiion</div>
+                        <div className="conversations h-[65vh] mt-4 max-md:h-[70vh] overflow-x-hidden overflow-y-scroll textarea-hide-scrollbar">
+                            <h2 className='pl-2'>Previous Prompts</h2>
+                         {prompts.map((prompt)=>{
+                            const count =0;
+                            return <ul>
+                                <li className="bg-slate-800 p-2 m-2 rounded overflow-hidden   border-slate-500 border-2" key={count}>{prompt}</li>
+                            </ul>
+                         })}
+                        </div>
 
                         <div className=" h-[4vh] mt-4 flex justify-end items-center gap-2 max-md:gap-0 max-md:mt-2  bg-slate-800 text-teal-300">
                             <div className="text text-sm bg-transparent max-md:text-[10px] max-md:pr-2">Give Your Valuable Feedback Here</div>
