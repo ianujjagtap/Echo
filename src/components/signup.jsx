@@ -10,7 +10,7 @@ const Signup = ({setIsAuthenticated}) => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/signup', { username, password });
+            const response = await axios.post('https://echo-backend-uttw.onrender.com/signup', { username, password });
             setMessage(response.data.message);
             setIsAuthenticated(true)
         } catch (error) {
