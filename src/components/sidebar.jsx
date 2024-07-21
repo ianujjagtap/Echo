@@ -33,7 +33,7 @@ const sidebar = () => {
         };
 
         fetchConversations();
-    }, []);
+    }, [conversations]);
 
     return (
         <>
@@ -44,7 +44,7 @@ const sidebar = () => {
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ duration: 0.6, ease: 'easeIn' }}
-                        className="sidebar w-72 h-[81vh] top-[60px] z-10 absolute p-4 bg-slate-800 max-md:w-56 ">
+                        className="sidebar w-72 h-[81vh] top-[60px] fixed z-10  p-4 bg-slate-800 max-md:w-56 ">
                         <div className="button flex justify-end max-md:pl-44 bg-transparent">
                             <FaRegPenToSquare className='text-xl bg-transparent' onClick={() => dispatch(setShowLogo(true))} />
                         </div>
@@ -59,9 +59,9 @@ const sidebar = () => {
                         </div>
 
                         <div className=" h-[4vh] mt-4 flex justify-end items-center gap-2 max-md:gap-0 max-md:mt-2  bg-slate-800 text-teal-300">
-                            <div className="text text-sm bg-transparent max-md:text-[10px] max-md:pr-2">Give Your Valuable Feedback Here</div>
+                            <div className="text text-sm bg-transparent max-md:text-[9px] max-md:pr-1">Give Your Valuable Feedback Here</div>
                             <a href="mailto:anujjagtap2004@gmail.com" className='bg-slate-800'>
-                                <i className="ri-feedback-line bg-slate-800 text-teal-300 text-2xl py-[1px] border-b-2 border-teal-300 " />
+                                <i className="ri-feedback-line bg-slate-800 text-teal-300 text-2xl  py-[2px]  border-b-2 border-teal-300 " />
                             </a>
 
 
