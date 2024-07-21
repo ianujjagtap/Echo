@@ -16,7 +16,7 @@ const sidebar = () => {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/conversations', {
+                const response = await axios.get('https://echo-backend-uttw.onrender.com/conversations', {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
                 
