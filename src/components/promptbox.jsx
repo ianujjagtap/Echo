@@ -5,7 +5,7 @@ import { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt } from '../fe
 
 
 
-
+// AI
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = () => {
@@ -38,7 +38,7 @@ const Prompt = () => {
             console.error('Error generating content:', error);
         }
     };
-    
+
     return (
         <>
             <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0">
@@ -52,7 +52,7 @@ const Prompt = () => {
                         style={{ resize: 'none' }}
                     />
                     <button
-                    type='button'
+                        type='button'
                         className="absolute right-2 h-10 px-4 bottom-7 bg-blue-500 text-white rounded-full max-md:right-2 max-md:bottom-7"
                         onClick={handleGenerate}
                     >
