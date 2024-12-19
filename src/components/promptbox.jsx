@@ -3,39 +3,39 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useDispatch, useSelector } from 'react-redux';
 import { setGeneratedText, setShowLogo, setPrompt, setLockedPrompt } from '../features/chatSlice';
 
+
+
+// AI
 const genAI = new GoogleGenerativeAI('AIzaSyAG1hnTOoQ6ioyIVzCDer3MCsjxrMajzhI');
 
 const Prompt = () => {
     const dispatch = useDispatch();
     const prompt = useSelector((state) => state.chat.prompt);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const handleGenerate = async () => {
-        setLoading(true);
+
         dispatch(setShowLogo(false));
         dispatch(setLockedPrompt(prompt));
         dispatch(setPrompt(''));
 
-        try {
-            const model = genAI.getGenerativeModel({
-                model: "gemini-1.5-pro-002", tools: [
-                    {
-                        codeExecution: {},
-                    },
-                ],
-            });
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-pro-002", tools: [
+                {
+                    codeExecution: {},
+                },
+            ],
+        });
 
+        try {
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = await response.text();
             const splitedText = text.split("* .");
             const joinedText = splitedText.join("\n")
             dispatch(setGeneratedText(joinedText));
+
         } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
+            console.error('Error generating content:', error);
         }
     };
 
@@ -43,6 +43,7 @@ const Prompt = () => {
         <>
             <div className="prompt fixed z-20 bottom-0 w-full h-20 flex justify-center items-center max-md:bottom-0">
                 <div className='relative flex justify-center items-center flex-col'>
+
                     <textarea
                         value={prompt}
                         onChange={(e) => dispatch(setPrompt(e.target.value))}
@@ -57,13 +58,12 @@ const Prompt = () => {
                     >
                         Generate
                     </button>
-                    {loading && <div>Loading...</div>}
-                    {error && <div style={{ color: 'red' }}>{error}</div>}
                     <span className='text-xs text-slate-300 mt-1 max-md:text-[8px]'>Echo may display inaccurate info, including about people, so double-check its responses. </span>
                 </div>
+
             </div>
         </>
     )
-};
+}
 
-export default Prompt;
+export default Prompt
