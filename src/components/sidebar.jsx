@@ -16,10 +16,10 @@ const sidebar = () => {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                const response = await axios.get('https://echo-backend-uttw.onrender.com/conversations', {
+                const response = await axios.get(`${import.meta.env.BACKEND_SERVER_URL}/conversations`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
-                
+
                 const data = response.data;
                 setConversations(data);
 
@@ -50,12 +50,12 @@ const sidebar = () => {
                         </div>
                         <div className="conversations h-[65vh] mt-4 max-md:h-[70vh] overflow-x-hidden overflow-y-scroll textarea-hide-scrollbar">
                             <h2 className='pl-2'>Previous Prompts</h2>
-                         {prompts.map((prompt)=>{
-                            const count =0;
-                            return <ul>
-                                <li className="bg-slate-800 p-2 m-2 rounded overflow-hidden   border-slate-500 border-2" key={count}>{prompt}</li>
-                            </ul>
-                         })}
+                            {prompts.map((prompt) => {
+                                const count = 0;
+                                return <ul>
+                                    <li className="bg-slate-800 p-2 m-2 rounded overflow-hidden   border-slate-500 border-2" key={count}>{prompt}</li>
+                                </ul>
+                            })}
                         </div>
 
                         <div className=" h-[4vh] mt-4 flex justify-end items-center gap-2 max-md:gap-0 max-md:mt-2  bg-slate-800 text-teal-300">

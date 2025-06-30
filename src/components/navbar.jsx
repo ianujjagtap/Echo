@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from "./productCard";
+import ProductCard from "./product-card";
 import DeveloperCard from "./developer";
 import { motion } from 'framer-motion';
 import { BsLayoutSidebarInset, BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../features/chatSlice';
-
-
-
-
-
-
 
 const navbar = () => {
     /* We Have Not Stored This State Variables In Store Becuase They Are being Used In Only This 
