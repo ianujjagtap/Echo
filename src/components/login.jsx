@@ -11,10 +11,12 @@ const Login = ({ setIsAuthenticated }) => {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        setIsLoading(true);
         e.preventDefault();
+        setIsLoading(true);
         try {
-            const response = await axios.post(`${import.meta.env.BACKEND_SERVER_URL}/login`, { username, password });
+            const url = `${import.meta.env.VITE_BACKEND_SERVER_URL}/login`
+            console.log("url", url);
+            const response = await axios.post(url, { username, password });
             console.log.log("response", response);
             setMessage(response.data.message);
             localStorage.setItem('token', response.data.token);

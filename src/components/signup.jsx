@@ -10,7 +10,8 @@ const Signup = ({ setIsAuthenticated }) => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.BACKEND_SERVER_URL}/signup`, { username, password });
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URL}/signup`, { username, password });
+            console.log.log("response", response);
             setMessage(response.data.message);
             setIsAuthenticated(true)
         } catch (error) {
