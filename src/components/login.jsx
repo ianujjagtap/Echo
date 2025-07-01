@@ -13,18 +13,16 @@ const Login = ({ setIsAuthenticated }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        try {
-            const url = `${import.meta.env.VITE_BACKEND_SERVER_URL}/login`
-            console.log("url", url);
-            const response = await axios.post(url, { username, password });
-            console.log.log("response", response);
-            setMessage(response.data.message);
-            localStorage.setItem('token', response.data.token);
-            setIsAuthenticated(true);
-            navigate('/echo'); // Redirect to Echo component
-        } catch (error) {
+
+        const url = `${import.meta.env.VITE_BACKEND_SERVER_URL}/login`
+        const response = await axios.post(url, { username, password });
+        if (!response.ok) {
             setMessage('Login failed. Please try again.');
         }
+        setMessage(response.message || "Login successful");
+        localStorage.setItem('token', response.data.token);
+        setIsAuthenticated(true);
+        navigate('/echo');
     };
 
     return (
@@ -53,7 +51,7 @@ const Login = ({ setIsAuthenticated }) => {
                     </div>
                     <button
                         type="submit"
-                        className="w-80 h-10 flex justify-evenly items-center bg-blue-700 border-2 max-md:w-52 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
+                        className="w-full h-10 flex justify-evenly items-center bg-blue-700 border-2 max-md:w-52 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
                     >Log In</button>
                     <span className='text-xs text-red-600 bg-transparent'>{message}</span>
                     <span className='text-sm bg-transparent'>Don't Have An Account <Link to="/signup" className="text-teal-300 bg-transparent">Sign Up</Link></span>
