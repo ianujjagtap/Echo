@@ -7,9 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../features/chatSlice';
 
 const navbar = () => {
-    /* We Have Not Stored This State Variables In Store Becuase They Are being Used In Only This 
-     Componet*/
-
     const dispatch = useDispatch();
 
     const [ActiveCard, setActiveCard] = useState(null);
@@ -20,15 +17,11 @@ const navbar = () => {
         if (ActiveCard == "DeveloperCard" || ActiveCard == "ProductCard") {
             const timer = setTimeout(() => {
                 setActiveCard(null);
-            }, 5000); // Adjust the timeout duration as needed (5000ms = 5s)
+            }, 5000);
 
-            return () => clearTimeout(timer); // Cleanup the timer on component unmount or if showDeveloperCard changes
+            return () => clearTimeout(timer); s
         }
     }, [ActiveCard]);
-
-
-
-
     return (
         <>
             <motion.nav initial={{ opacity: 0, y: 20 }}

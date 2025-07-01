@@ -7,12 +7,15 @@ const Login = ({ setIsAuthenticated }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
         try {
-            const response = await axios.post('https://echo-backend-uttw.onrender.com/login', { username, password });
+            const response = await axios.post(`${import.meta.env.BACKEND_SERVER_URL}/login`, { username, password });
+            console.log.log("response", response);
             setMessage(response.data.message);
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true);
@@ -25,7 +28,7 @@ const Login = ({ setIsAuthenticated }) => {
     return (
         <form onSubmit={handleLogin}>
             <div className="flex justify-center items-center h-screen bg-[#111] max-md:h-[100vw] max-md:mt-40">
-                <div className="login w-96 h-96 flex flex-col justify-between items-center bg-slate-800 p-4 rounded-xl shadow-md max-md:w-80">
+                <div className="login w-96 h-96 flex flex-col justify-between items-center border-[0.5px] p-4 rounded-xl shadow-md max-md:w-80">
                     <span className="text-teal-300 text-3xl pt-6 bg-transparent  font-semibold max-md:text-2xl   hover:scale-150 transition duration-500 ease-in-out select-none">Echo</span>
 
                     <div className="inputs mt-4 space-y-4 bg-transparent">
