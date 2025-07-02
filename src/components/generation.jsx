@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark.css'; 
+import 'highlight.js/styles/github-dark.css';
 import echo_logo from "../images/echo-logo.png";
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
@@ -34,11 +34,11 @@ const Generation = () => {
 
     const sendConversationToBackend = async (prompt, generatedText) => {
         try {
-            const response = await axios.post('https://echo-backend-uttw.onrender.com/conversation/add', {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URL}/conversation`, {
                 prompt,
                 response: generatedText,
-            },{
-                headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
 
             if (response.status === 200) {
@@ -67,7 +67,7 @@ const Generation = () => {
 
                 {!showLogo && (
                     <div data-scroll-section className="scroll-section flex  flex-col p-4">
-                        <div className="prompt-text text-center bg-slate-600 rounded-lg p-4 w-[50%] ml-96 max-md:ml-44">
+                        <div className="prompt-text text-center border-[0.5px] rounded-lg p-4 w-[50%] ml-96 max-md:ml-44">
                             {prompt}
                         </div>
                         {generatedText ? (
@@ -77,20 +77,20 @@ const Generation = () => {
                             />
                         ) : (
                             <div className="skeleton mt-6  max-md:w-60">
-                            <Stack spacing={1}>
-                                <Skeleton
-                                    variant="rounded"
-                                    animation="pulse"
-                                    height={120}
-                                   
-                                    sx={{ 
-                                        pt: 6, 
-                                        bgcolor: 'grey.700', 
-                                        width: {lg:550} 
-                                    }}
-                                />
-                            </Stack>
-                        </div>
+                                <Stack spacing={1}>
+                                    <Skeleton
+                                        variant="rounded"
+                                        animation="pulse"
+                                        height={120}
+
+                                        sx={{
+                                            pt: 6,
+                                            bgcolor: 'grey.700',
+                                            width: { lg: 550 }
+                                        }}
+                                    />
+                                </Stack>
+                            </div>
                         )}
                     </div>
                 )}
