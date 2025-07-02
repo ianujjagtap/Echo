@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 
 
 const Login = ({ setIsAuthenticated }) => {
@@ -18,14 +17,9 @@ const Login = ({ setIsAuthenticated }) => {
         const url = `${import.meta.env.VITE_BACKEND_SERVER_URL}/login`
         const response = await axios.post(url, { username, password });
         if (!response.ok) {
-            toast.error('Login failed. Please try again.', {
-                description: response.message,
-                className: '!bg-red-500',
-            });
+            setMessage('Login failed. Please try again.');
         }
-        toast.success('Login successful.', {
-            description: 'You are now logged in.',
-        });
+        setMessage(response.message || "Login successful");
         localStorage.setItem('token', response.data.token);
         setIsAuthenticated(true);
         navigate('/echo');
