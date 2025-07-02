@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = ({ setIsAuthenticated }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+    const navigate = useNavigate()
 
     const handleSignup = async (e) => {
         e.preventDefault();
         const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URL}/signup`, { username, password });
-
         if (!response.ok) {
-            setMessage('Signup failed. Please try again.');
+            console.error('Signup failed. Please try again.', {
+                description: response.message,
+                className: '!bg-black !text-white',
+            });
         }
 
-        setMessage(response.message || "User signup successful");
+        toast.success("User signup successful", {
+            className: '!bg-black !text-white',
+        });
+        navigate('/')
         setIsAuthenticated(true)
     };
 
@@ -47,7 +54,6 @@ const Signup = ({ setIsAuthenticated }) => {
                         type="submit"
                         className="w-full h-10 flex justify-evenly items-center max-md:w-52 bg-blue-700 border-2 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
                     >Sign Up</button>
-                    <span className='text-xs'>{message}</span>
                     <span className='text-sm bg-transparent'>Already Have Account<Link to="/" className="text-teal-300 bg-transparent"> Log In</Link></span>
                 </div>
             </div>
