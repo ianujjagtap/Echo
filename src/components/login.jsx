@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
-import { User } from 'lucide-react';
 
 
 const Login = ({ setIsAuthenticated }) => {
@@ -53,25 +51,13 @@ const Login = ({ setIsAuthenticated }) => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full h-10 flex justify-center gap-2 items-center bg-blue-700 border-2 max-md:w-52 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
-                    >
-                        {isLoading ?
-                            <>
-                                <Loader2 className='animate-spin bg-transparent h-5 w-5' />
-                                Logging In
-                            </>
-                            : <>
-                                <User className='bg-transparent h-5 w-5' />
-                                Log In
-                            </>
-                        }
-
-                    </button>
+                        className="w-full h-10 flex justify-evenly items-center bg-blue-700 border-2 max-md:w-52 border-slate-800 text-center text-white rounded-md ml-3 max-md:bottom-0"
+                    >Log In</button>
                     <span className='text-xs text-red-600 bg-transparent'>{message}</span>
                     <span className='text-sm bg-transparent'>Don't Have An Account <Link to="/signup" className="text-teal-300 bg-transparent">Sign Up</Link></span>
                 </div>
             </div>
-        </form >
+        </form>
     );
 };
 
