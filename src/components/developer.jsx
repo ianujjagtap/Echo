@@ -1,34 +1,82 @@
-import React from 'react';
-import Photo from "../images/myphoto.jpg";
-import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import React from "react";
+import Photo from "@/images/myphoto.jpg";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { X, Github, Linkedin, Twitter } from "lucide-react";
+import { motion } from "framer-motion";
 
+const DeveloperCard = ({ onClose }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      className="absolute right-4 top-16 z-50 md:right-6"
+    >
+      <Card className="w-80 border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl">
+        <CardContent className="p-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 h-7 w-7"
+            onClick={onClose}
+          >
+            <X className="h-4 w-4" />
+          </Button>
 
-const developer = ({ setActiveCard }) => {
-    return (
-        <>
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className="developer-card p-6  absolute right-20  rounded-lg shadow-lg w-80 mt-8 max-md:right-8">
+          <div className="flex flex-col items-center text-center">
+            <Avatar className="h-20 w-20 border-2 border-primary/30">
+              <AvatarImage src={Photo} alt="Jagtap Anuj" />
+              <AvatarFallback>AJ</AvatarFallback>
+            </Avatar>
 
-                <div className="flex flex-col items-center">
+            <h3 className="mt-3 text-lg font-semibold">Jagtap Anuj</h3>
 
-                    <i onClick={() => setActiveCard(null)} className="ri-close-large-line absolute text-text-slate-400 hover:text-teal-300 right-8"></i>
-                    <img src={Photo} alt="Developer" className="w-32 h-32 rounded-full object-cover mb-4" />
-                    <h2 className="text-xl font-semibold mb-2">Jagtap Anuj</h2>
-                    <p className="text-gray-600 mb-4 text-center">Aspiring MERN Stack Developer Who Loves Crafting Web Apps❤️</p>
-                    <div className="flex space-x-4">
-                        <a href="https://twitter.com/JagtapAnuj15836" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700"><FaTwitter size={24} /></a>
-                        <a href="linkedin.com/in/anuj-jagtap-66a23429a" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900"><FaLinkedin size={24} /></a>
-                        <a href="https://github.com/Anuj2004-Jagtap" target="_blank" rel="noopener noreferrer" className="text-gray-800 hover:text-gray-600"><FaGithub size={24} /></a>
+            <Badge variant="secondary" className="mt-1">
+              MERN Stack Developer
+            </Badge>
 
-                    </div>
-                </div>
-            </motion.div>
-        </>
-    )
-}
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              Aspiring developer who loves crafting web apps ❤️
+            </p>
 
-export default developer
+            <div className="mt-4 flex gap-2">
+              <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
+                <a
+                  href="https://twitter.com/JagtapAnuj15836"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Twitter className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
+                <a
+                  href="https://linkedin.com/in/anuj-jagtap-66a23429a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
+                <a
+                  href="https://github.com/Anuj2004-Jagtap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
+
+export default DeveloperCard;

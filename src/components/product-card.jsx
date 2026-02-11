@@ -1,55 +1,78 @@
-import React from 'react';
-import Project1 from "../images/copy-document.png";
-import { motion } from 'framer-motion';
-import TWG from '../images/TWG.png'
+import React from "react";
+import Project1 from "@/images/copy-document.png";
+import TWG from "@/images/TWG.png";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, X } from "lucide-react";
+import { motion } from "framer-motion";
 
-const ProductCard = ({ setActiveCard }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="developer-card p-6 absolute right-20 bg-slate-800 rounded-lg shadow-lg w-80 mt-8 max-md:right-8"
-        >
-            <div className="flex flex-col items-center">
-                <i
-                    onClick={() => setActiveCard(null)}
-                    className="ri-close-large-line top-0 bg-slate-800 absolute text-text-slate-400 hover:text-teal-300 right-6 cursor-pointer"
-                    aria-label="Close"
-                ></i>
+const projects = [
+  {
+    name: "Text-Klean",
+    description: "A text file cleaning app",
+    url: "https://text-klean.vercel.app/",
+    icon: Project1,
+  },
+  {
+    name: "Two-Goods-Web",
+    description: "UI using GSAP & Locomotive",
+    url: "https://two-goods-webs.vercel.app/",
+    icon: TWG,
+  },
+];
 
-                <div className="product1 flex justify-center items-center w-[78%] h-12 mt-2 pb-2">
-                    <img src={Project1} alt="Project Logo" className="w-8 h-8" />
-                    <div className="pl-4">
-                        <div className="flex items-center">
-                            Text-Klean{" "}
-                            <span className="pl-2 text-lg">
-                                <a href="https://text-klean.vercel.app/" target="_blank" rel="noopener noreferrer">
-                                    <i className="ri-external-link-line text-teal-200"></i>
-                                </a>
-                            </span>
-                        </div>
-                        <div className="text-xs text-slate-300">A Text File Cleaning App</div>
-                    </div>
+const ProductCard = ({ onClose }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      className="absolute right-4 top-16 z-50 md:right-6"
+    >
+      <Card className="w-80 border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl">
+        <CardContent className="p-5">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 h-7 w-7"
+            onClick={onClose}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+
+          <h3 className="mb-4 text-sm font-medium text-muted-foreground uppercase tracking-wider">
+            Other Projects
+          </h3>
+
+          <div className="space-y-3">
+            {projects.map((project) => (
+              <a
+                key={project.name}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 rounded-xl border border-border/30 bg-secondary/30 p-3 transition-all hover:border-primary/30 hover:bg-secondary/60"
+              >
+                <img
+                  src={project.icon}
+                  alt={project.name}
+                  className="h-10 w-10 rounded-lg object-contain"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-medium">{project.name}</span>
+                    <ExternalLink className="h-3 w-3 text-primary opacity-0 transition-opacity group-hover:opacity-100" />
+                  </div>
+                  <p className="text-xs text-muted-foreground">{project.description}</p>
                 </div>
-
-                <div className="product2 flex justify-center items-center w-[78%] h-12 mt-4 pb-2">
-                    <img src={TWG} alt="Project Logo" className="w-8 h-8" />
-                    <div className="pl-4">
-                        <div className="flex items-center">
-                            Two-Goods-Web{" "}
-                            <span className="pl-2 text-lg">
-                                <a href="https://two-goods-webs.vercel.app/" target="_blank" rel="noopener noreferrer">
-                                    <i className="ri-external-link-line text-teal-200"></i>
-                                </a>
-                            </span>
-                        </div>
-                        <div className="text-xs text-slate-300">UI Using Gsap & LocoMotive </div>
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-    );
-}
+              </a>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
 
 export default ProductCard;

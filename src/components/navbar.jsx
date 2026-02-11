@@ -1,63 +1,99 @@
-import React, { useState, useEffect } from 'react';
-import ProductCard from "./product-card";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSidebar } from "@/features/chatSlice";
+import { Button } from "@/components/ui/button";
+import { PanelLeftOpen, PanelLeftClose, User, Package } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { motion } from "framer-motion";
 import DeveloperCard from "./developer";
-import { motion } from 'framer-motion';
-import { BsLayoutSidebarInset, BsLayoutSidebarInsetReverse } from "react-icons/bs";
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '../features/chatSlice';
+import ProductCard from "./product-card";
 
-const navbar = () => {
-    const dispatch = useDispatch();
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const [activeCard, setActiveCard] = useState(null);
+  const isSidebarVisible = useSelector((state) => state.chat.isSidebarVisible);
 
-    const [ActiveCard, setActiveCard] = useState(null);
+  useEffect(() => {
+    if (activeCard) {
+      const timer = setTimeout(() => setActiveCard(null), 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [activeCard]);
 
-    const isSidebarVisible = useSelector(state => state.chat.isSidebarVisible);
-
-    useEffect(() => {
-        if (ActiveCard == "DeveloperCard" || ActiveCard == "ProductCard") {
-            const timer = setTimeout(() => {
-                setActiveCard(null);
-            }, 5000);
-
-            return () => clearTimeout(timer); s
-        }
-    }, [ActiveCard]);
-    return (
-        <>
-            <motion.nav initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className=" p-4 px-44  w-full fixed z-20 max-md:px-4">
-                <div className="container mx-auto flex justify-between items-center">
-                    <div className="flex items-center ">
-
-                        {isSidebarVisible ? (
-                            <span className='absolute left-16 z-50 max-md:left-8 '><BsLayoutSidebarInsetReverse className='text-xl select-none' onClick={() => dispatch(toggleSidebar())} /></span>
-                        )
-                            :
-                            (
-                                <span className='absolute left-16 z-50 max-md:left-8 '><BsLayoutSidebarInset className='text-xl select-none' onClick={() => dispatch(toggleSidebar())} /></span>
-                            )
-
-                        }
-                        <span className="text-white text-2xl font-semibold max-md:text-2xl max-md:ml-12 hover:text-teal-300 hover:scale-150 trasition duration-500 ease-in-out select-none">Echo</span>
-                    </div>
-                    <div className="flex space-x-4 max-md:text-sm">
-                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('ProductCard') }} className="text-white hover:text-teal-300 max-md:hidden">Other Products</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); setActiveCard('DeveloperCard') }} className="  text-white hover:text-teal-300 max-md:pt-2 ">About Developer</a>
-                    </div>
-                </div>
-
-                {ActiveCard == "DeveloperCard" && (
-                    <DeveloperCard setActiveCard={setActiveCard} />
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="fixed top-0 left-0 right-0 z-30 border-b border-border/50 bg-background/80 backdrop-blur-xl"
+    >
+      <div className="flex h-14 items-center justify-between px-4 md:px-6">
+        {/* left section */}
+        <div className="flex items-center gap-3">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9"
+                onClick={() => dispatch(toggleSidebar())}
+              >
+                {isSidebarVisible ? (
+                  <PanelLeftClose className="h-5 w-5" />
+                ) : (
+                  <PanelLeftOpen className="h-5 w-5" />
                 )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {isSidebarVisible ? "Close sidebar" : "Open sidebar"}
+            </TooltipContent>
+          </Tooltip>
 
-                {ActiveCard == "ProductCard" && (
-                    <ProductCard setActiveCard={setActiveCard} />
-                )}
-            </motion.nav>
-        </>
-    )
-}
+          <span className="gradient-text text-xl font-bold tracking-tight select-none">
+            Echo
+          </span>
+        </div>
 
-export default navbar
+        {/* right section */}
+        <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hidden md:inline-flex gap-2 text-muted-foreground hover:text-foreground"
+                onClick={() => setActiveCard(activeCard === "ProductCard" ? null : "ProductCard")}
+              >
+                <Package className="h-4 w-4" />
+                Products
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Other projects</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 text-muted-foreground hover:text-foreground"
+                onClick={() => setActiveCard(activeCard === "DeveloperCard" ? null : "DeveloperCard")}
+              >
+                <User className="h-4 w-4" />
+                <span className="hidden sm:inline">Developer</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">About the developer</TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
+
+      {/* dropdown cards */}
+      {activeCard === "DeveloperCard" && <DeveloperCard onClose={() => setActiveCard(null)} />}
+      {activeCard === "ProductCard" && <ProductCard onClose={() => setActiveCard(null)} />}
+    </motion.nav>
+  );
+};
+
+export default Navbar;
